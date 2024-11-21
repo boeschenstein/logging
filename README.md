@@ -1,5 +1,32 @@
 # Logging
 
+## Unittest
+
+FakeLogger (.NET 8): <https://stackoverflow.com/questions/43424095/how-to-unit-test-with-ilogger-in-asp-net-core/78414479#78414479>
+
+## Static Logger
+
+- <https://levelup.gitconnected.com/how-to-eliminate-injecting-ilogger-t-everywhere-in-net-301be7b367a8>
+
+```cs
+// todo verify
+var builder = WebApplication.CreateBuilder();
+var serviceProvider = builder.Services.BuildServiceProvider();
+StaticLoggerFactory.Initialize(serviceProvider.GetRequiredService<ILoggerFactory>());
+```
+
+simple:
+
+```cs
+ILogger logger = context.ServiceProvider.GetRequiredService<ILogger<Program>>();
+```
+
+from Hangfire:
+
+```cs
+private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
+```
+
 ## Structured Logging
 
 <https://serilog.net/>
@@ -8,7 +35,7 @@
 
 From <https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel>
 
-```
+```cmd
 dotnet new webapi -o aspnetacorewebapi
 
 cd aspnetacorewebapi
